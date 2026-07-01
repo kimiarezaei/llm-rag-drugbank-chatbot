@@ -1,0 +1,23 @@
+# Environment
+.env
+venv/
+.env/
+project1env/
+*.venv/
+
+# Cache / DB
+cache/
+chromadb_*/
+
+# Logs
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# OS / tooling
+.DS_Store
+.streamlit/
