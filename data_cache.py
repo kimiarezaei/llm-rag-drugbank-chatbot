@@ -24,8 +24,7 @@ def load_data():
         token=settings.hf_token if settings.hf_token else None
     )
 
-    train = dataset["train"].select(range(100))  # or full dataset later
-    # train = dataset["train"]  # or full dataset later
+    train = dataset["train"]  
 
     docs = [row["output"] for row in train]
 
