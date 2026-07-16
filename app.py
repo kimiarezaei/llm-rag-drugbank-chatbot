@@ -5,7 +5,7 @@ from utils.logger import get_logger
 
 from data_cache import load_data
 from services.retrieval import build_index
-from services.qa import answer_question
+from agent.workflow import agent_app
 
 
 
@@ -57,10 +57,19 @@ def run_app():
     if st.button("Answer"):
 
         if question.strip():
-            logger.info(f"User question: {question}")
+            logger.info("User question: %s", question)
 
-            # Optional: retrieve context (if your QA uses it internally)
-            answer = answer_question(question)
+            # retrieve context 
+            result = agent_app.invoke(
+                {
+                    "question": question
+                }
+            )
+            
+            if result["qa_answer"] != "NONE":
+                answer = result["qa_answer"]
+            else:
+                answer = result["pubmed_answer"]
 
             st.session_state.history.append((question, answer))
 

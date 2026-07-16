@@ -1,21 +1,34 @@
-from services.llm import call_llm
-from services.retrieval import search
+from .llm import call_llm
+from .retrieval import search
 from utils.logger import get_logger
 from config import settings
 
+
+
 logger = get_logger(__name__)
-def answer_question(question: str) -> str:
+
+def answer_question(question: str, drug_name: str) -> str:
     """
     Answers a question using RAG (retrieval-augmented generation).
     """
 
-    logger.info(f"QA question received: {question}")
+    logger.info(f"QA question and drug name received: {question}, {drug_name}")
 
-    # Retrieve relevant chunks
+    # Check if drug exists in database
+    drug_chunks = search(drug_name)
+
+    if not drug_chunks:
+        logger.info(
+            "Drug '%s' not found in database",
+            drug_name
+        )
+        return "NONE"
+
+
+    # Retrieve relevant chunks regarding the question
     relevant_chunks = search(question)
 
     context = "\n\n".join(relevant_chunks)
-
 
     prompt = f"""
 You are a precise question-answering assistant for a biomedical and pharmaceutical knowledge base.
@@ -43,4 +56,5 @@ ANSWER:
 
     logger.info("QA response generated using RAG")
 
-    return response
+    return response.strip()
+

@@ -6,3 +6,7 @@ pydantic-settings
 anthropic
 sentence-transformers
 huggingface-hub
+langgraph
+langchain-anthropic
+torch
+torchvision

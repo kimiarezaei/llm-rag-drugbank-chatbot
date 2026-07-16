@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env
+.streamlit
+project1env
+venv
+.venv
+__pycache__
+*.pyc
+cache
+chromadb_*
+logs
+images

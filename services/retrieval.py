@@ -58,9 +58,26 @@ def build_index(documents: list[str], batch_size: int = 100, force_rebuild: bool
     logger.info(f"Index built with {len(all_chunks)} chunks.")
 
 # Search
-def search(query: str, k: int = 5):
+# def search(query: str, k: int = 5):
+#     results = collection.query(
+#         query_texts=[query],
+#         n_results=k
+#     )
+#     return results.get("documents", [[]])[0]
+
+def search(query: str, threshold=0.5):
     results = collection.query(
         query_texts=[query],
-        n_results=k
+        n_results=5,
+        include=["documents", "distances"]
     )
-    return results.get("documents", [[]])[0]
+
+    documents = results["documents"][0]
+    distances = results["distances"][0]
+
+    filtered_docs = [
+        doc for doc, distance in zip(documents, distances)
+        if distance < threshold
+    ]
+
+    return filtered_docs

@@ -26,7 +26,9 @@ def load_data():
 
     train = dataset["train"]  
 
+    # Extract the 'output' field from each row in the training dataset
     docs = [row["output"] for row in train]
+   
 
     # Save cache
     with open(CACHE_FILE, "w", encoding="utf-8") as f:

@@ -20,6 +20,12 @@ class Settings(BaseSettings):
     # Embeddings
     embedding_model_name: str = "all-MiniLM-L6-v2"
 
+
+    # question keyword extraction
+    keyword_temperature: float = 0.0
+    keyword_max_tokens: int = 200
+
+
     # Cache
     cache_version: str = "v1"
 
